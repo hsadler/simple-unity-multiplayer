@@ -1,0 +1,20 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workbench ActiveDocument="Library/PackageCache/com.unity.2d.psdimporter@4.1.1/Editor/PSDImporter.cs">
+    <Files>
+      <File FileName="Library/PackageCache/com.unity.2d.psdimporter@4.1.1/Editor/PSDImporter.cs" Line="594" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="GameClient" selected="True" />
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

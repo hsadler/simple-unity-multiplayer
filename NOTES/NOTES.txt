@@ -1,4 +1,15 @@
 
+
+TODO:
+    - add boilerplate files for server
+    - get server runnable locally with mock endpoints
+    - start Unity client project
+    - do simple server implementation for state synching and broadcast
+    - write unity class for interacting with game server
+    - implement simple game in unity
+    - test with multiple clients
+
+
 Ideas for Unity Multiplayer Game Server library:
     - API:
         - synch data from game-client to game-server
