@@ -1,6 +1,6 @@
 
 build:
-	docker build -t golang-multiplayer-server:dev -f Dockerfile.dev .
+	docker build -t simple-unity-multiplayer:dev -f Dockerfile.dev .
 
 up:
 	docker-compose -f docker-compose.dev.yaml up
@@ -8,14 +8,14 @@ up:
 prod-deploy: heroku-push heroku-release
 
 prod-info:
-	heroku apps:info golang-multiplayer-server-demo
+	heroku apps:info simple-unity-multiplayer
 
 prod-logs:
-	heroku logs -a golang-multiplayer-server-demo --tail
+	heroku logs -a simple-unity-multiplayer --tail
 
 heroku-push:
-	heroku container:push web -a golang-multiplayer-server-demo
+	heroku container:push web -a simple-unity-multiplayer
 
 heroku-release:
-	heroku container:release web -a golang-multiplayer-server-demo
+	heroku container:release web -a simple-unity-multiplayer
 
