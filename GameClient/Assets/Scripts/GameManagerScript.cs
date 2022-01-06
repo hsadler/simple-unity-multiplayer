@@ -21,6 +21,8 @@ public class GameManagerScript : MonoBehaviour
     //      - mutations to game-state from scene must automatically call for a
     //          sync to server
 
+    public GameObject boardSquarePrefab;
+
     private GameState gameState;
     private MultiplayerSync mpSync;
 
@@ -38,7 +40,7 @@ public class GameManagerScript : MonoBehaviour
 
     void Start()
     {
-        
+        this.BuildGameBoard();
     }
 
     void Update()
@@ -52,7 +54,20 @@ public class GameManagerScript : MonoBehaviour
 
     private void BuildGameBoard()
     {
-        // STUB
+        for (int i = 0; i < BOARD_SIZE; i++)
+        {
+            for (int j = 0; j < BOARD_SIZE; j++)
+            {
+                GameObject bsGO = Instantiate(
+                    this.boardSquarePrefab,
+                    new Vector3(i, j, 0),
+                    Quaternion.identity
+                );
+                var boardSquare = new BoardSquare(i, j);
+                bsGO.GetComponent<BoardSquareScript>().bsModel = boardSquare;
+                this.gameState.board.boardSquares.Add(boardSquare);
+            }
+        }
     }
 
 

@@ -9,7 +9,7 @@ public class MultiplayerSync
     private WebSocket ws;
 
     public MultiplayerSync(string gameServerUrl) {
-        this.InitWebSocketClient(gameServerUrl);
+        //this.InitWebSocketClient(gameServerUrl);
     }
 
     // websocket helpers
