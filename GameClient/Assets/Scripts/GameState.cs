@@ -9,11 +9,19 @@ public class GameState
 {
 
     public Board board;
+    public bool boardInitialized;
     public List<Player> players;
         
     public GameState() {
         this.board = new Board();
+        this.boardInitialized = false;
         this.players = new List<Player>();
+    }
+
+    public GameState CreateFromJson(string gameStateJson)
+    {
+        // TODO: maybe use this
+        return new GameState();
     }
 
 }
@@ -39,11 +47,11 @@ public class BoardSquare
     public int positionY;
     public string ownerPlayerName;
 
-    public BoardSquare(int posX, int posY)
+    public BoardSquare(string boardSquareId, int positionX, int positionY)
     {
-        this.boardSquareId = System.Guid.NewGuid().ToString();
-        this.positionX = posX;
-        this.positionY = posY;
+        this.boardSquareId = boardSquareId;
+        this.positionX = positionX;
+        this.positionY = positionY;
         this.ownerPlayerName = null;
     }
 }

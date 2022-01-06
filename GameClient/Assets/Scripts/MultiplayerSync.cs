@@ -6,13 +6,28 @@ using WebSocketSharp;
 public class MultiplayerSync
 {
 
+
     private WebSocket ws;
 
+    public delegate void GameStateHandlerDelegate(string gameStateJson);
+    private GameStateHandlerDelegate gameStateHandlerDelegate;
+
+
     public MultiplayerSync(string gameServerUrl) {
-        //this.InitWebSocketClient(gameServerUrl);
+        this.InitWebSocketClient(gameServerUrl);
     }
 
-    // websocket helpers
+    // INTERFACE METHODS
+
+    public void SynchToServer(string gameStateJson) {
+        // STUB
+    }
+
+    public void RegisterSyncFromServerHandler(GameStateHandlerDelegate d) {
+        this.gameStateHandlerDelegate = d;
+    }
+
+    // WEBSOCKET HELPERS
 
     private void InitWebSocketClient(string gameServerUrl)
     {

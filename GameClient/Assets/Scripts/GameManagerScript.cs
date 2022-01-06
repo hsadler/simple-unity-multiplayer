@@ -21,12 +21,18 @@ public class GameManagerScript : MonoBehaviour
     //      - mutations to game-state from scene must automatically call for a
     //          sync to server
 
+
+    // game object refs
+    public GameObject mainCamera;
+
+    // prefab refs
     public GameObject boardSquarePrefab;
 
     private GameState gameState;
     private MultiplayerSync mpSync;
 
-    private const string GAME_SERVER_URL = "mock-url";
+    // localhost game server url
+    private const string GAME_SERVER_URL = "ws://localhost:5000"; 
     private const int BOARD_SIZE = 12;
 
 
@@ -40,7 +46,10 @@ public class GameManagerScript : MonoBehaviour
 
     void Start()
     {
-        this.BuildGameBoard();
+        if(!this.gameState.boardInitialized)
+        {
+            this.GenerateGameBoard();
+        }
     }
 
     void Update()
@@ -52,7 +61,7 @@ public class GameManagerScript : MonoBehaviour
 
     // IMPLEMENTATION METHODS
 
-    private void BuildGameBoard()
+    private void GenerateGameBoard()
     {
         for (int i = 0; i < BOARD_SIZE; i++)
         {
@@ -63,7 +72,8 @@ public class GameManagerScript : MonoBehaviour
                     new Vector3(i, j, 0),
                     Quaternion.identity
                 );
-                var boardSquare = new BoardSquare(i, j);
+                string boardSquareId = System.Guid.NewGuid().ToString();
+                var boardSquare = new BoardSquare(boardSquareId, i, j);
                 bsGO.GetComponent<BoardSquareScript>().bsModel = boardSquare;
                 this.gameState.board.boardSquares.Add(boardSquare);
             }
