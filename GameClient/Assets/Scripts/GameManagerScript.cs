@@ -31,9 +31,15 @@ public class GameManagerScript : MonoBehaviour
     private GameState gameState;
     private MultiplayerSync mpSync;
 
+    private bool gameObjectsUpdateRequired;
+
     // localhost game server url
     private const string GAME_SERVER_URL = "ws://localhost:5000"; 
+
+    // game settings
     private const int BOARD_SIZE = 12;
+
+    private IDictionary<string, GameObject> idToBoardSquareGO;
 
 
     // UNITY HOOKS
@@ -41,50 +47,82 @@ public class GameManagerScript : MonoBehaviour
     void Awake()
     {
         this.mpSync = new MultiplayerSync(GAME_SERVER_URL);
-        this.mpSync.RegisterSyncFromServerHandler(this.ProcessServerGameState);
-        this.gameState = new GameState();
+        this.mpSync.RegisterSyncFromServerHandler(this.SyncGameStateFromServer);
+        this.gameObjectsUpdateRequired = false;
+        this.idToBoardSquareGO = new Dictionary<string, GameObject>();
     }
 
     void Start()
     {
-        if(!this.gameState.boardInitialized)
-        {
-            this.GenerateGameBoard();
-        }
     }
 
     void Update()
     {
-        
+        if (this.gameObjectsUpdateRequired)
+        {
+            this.SyncGameObjectsFromGameState();
+        }
     }
 
     // INTERFACE METHODS
 
     // IMPLEMENTATION METHODS
 
-    private void GenerateGameBoard()
+    private void GenerateNewGameState()
     {
+        this.gameState = new GameState();
         for (int i = 0; i < BOARD_SIZE; i++)
         {
             for (int j = 0; j < BOARD_SIZE; j++)
             {
-                GameObject bsGO = Instantiate(
-                    this.boardSquarePrefab,
-                    new Vector3(i, j, 0),
-                    Quaternion.identity
-                );
                 string boardSquareId = System.Guid.NewGuid().ToString();
                 var boardSquare = new BoardSquare(boardSquareId, i, j);
-                bsGO.GetComponent<BoardSquareScript>().bsModel = boardSquare;
                 this.gameState.board.boardSquares.Add(boardSquare);
             }
         }
         this.mpSync.SynchToServer(JsonUtility.ToJson(this.gameState));
     }
 
-    private void ProcessServerGameState(string gameStateJson)
+    private void SyncGameObjectsFromGameState()
     {
-        Debug.Log("processing game state json from game manager: " + gameStateJson);
+        // make Unity scene objects reflect the game-state
+        foreach (BoardSquare bs in this.gameState.board.boardSquares)
+        {
+            if (this.idToBoardSquareGO.ContainsKey(bs.id))
+            {
+                GameObject bsGO = this.idToBoardSquareGO[bs.id];
+                var bsScript = bsGO.GetComponent<BoardSquareScript>();
+                bsScript.bsModel = bs;
+            } else
+            {
+                GameObject bsGO = Instantiate(
+                    this.boardSquarePrefab,
+                    new Vector3(bs.positionX, bs.positionY, 0),
+                    Quaternion.identity
+                );
+                var bsScript = bsGO.GetComponent<BoardSquareScript>();
+                bsScript.bsModel = bs;
+                this.idToBoardSquareGO.Add(bs.id, bsGO);
+            }
+        }
+        this.gameObjectsUpdateRequired = false;
+    }
+
+    private void SyncGameStateFromServer(string gameStateJson)
+    {
+        if(gameStateJson == "")
+        {
+            this.GenerateNewGameState();
+        } else
+        {
+            this.gameState = JsonUtility.FromJson<GameState>(gameStateJson);
+        }
+        this.gameObjectsUpdateRequired = true;
+    }   
+
+    private void SyncGameStateToServer(string gameStateJson)
+    {
+        this.mpSync.SynchToServer(gameStateJson);
     }
 
 

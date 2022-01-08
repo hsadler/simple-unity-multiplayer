@@ -20,7 +20,6 @@ public class MultiplayerSync
     // INTERFACE METHODS
 
     public void SynchToServer(string gameStateJson) {
-        // STUB
         this.SendWebsocketClientMessage(gameStateJson);
     }
 

@@ -13,12 +13,10 @@ public class BoardSquareScript : MonoBehaviour
 
     void Start()
     {
-        
     }
 
     void Update()
     {
-        
     }
 
 

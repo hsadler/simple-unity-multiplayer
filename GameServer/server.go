@@ -115,7 +115,7 @@ func SendJsonMessage(ws *websocket.Conn, messageJson []byte) {
 	ws.WriteMessage(1, messageJson)
 	// log that message was sent
 	fmt.Println("server message sent:")
-	ConsoleLogJsonByteArray(messageJson)
+	// ConsoleLogJsonByteArray(messageJson)
 }
 
 ///////////////// RUN SERVER /////////////////
@@ -139,7 +139,8 @@ func main() {
 		go cl.RecieveMessages()
 		go cl.SendMessages()
 		h.Add <- cl
-		// TODO: initialize client's game state by sending latest game state
+		// initialize client's game state by sending latest game state
+		h.Broadcast <- h.GameState
 	})
 	addr := flag.String("addr", "0.0.0.0:5000", "http service address")
 	err := http.ListenAndServe(*addr, nil)
