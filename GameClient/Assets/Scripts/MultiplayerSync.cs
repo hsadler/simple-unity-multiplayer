@@ -21,6 +21,7 @@ public class MultiplayerSync
 
     public void SynchToServer(string gameStateJson) {
         // STUB
+        this.SendWebsocketClientMessage(gameStateJson);
     }
 
     public void RegisterSyncFromServerHandler(GameStateHandlerDelegate d) {
@@ -41,7 +42,7 @@ public class MultiplayerSync
     private void ProcessServerMessage(object sender, MessageEventArgs e)
     {
         Debug.Log("Server message received: " + e.Data);
-        // STUB
+        this.gameStateHandlerDelegate(e.Data);
     }
 
     private void SendWebsocketClientMessage(string messageJson)

@@ -18,15 +18,10 @@ public class GameState
         this.players = new List<Player>();
     }
 
-    public GameState CreateFromJson(string gameStateJson)
-    {
-        // TODO: maybe use this
-        return new GameState();
-    }
-
 }
 
 
+[Serializable]
 public class Board
 {
 
@@ -39,6 +34,7 @@ public class Board
 }
 
 
+[Serializable]
 public class BoardSquare
 {
 
@@ -57,6 +53,7 @@ public class BoardSquare
 }
 
 
+[Serializable]
 public class Player
 {
 

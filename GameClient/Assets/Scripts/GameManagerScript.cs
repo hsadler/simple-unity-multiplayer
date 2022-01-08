@@ -41,6 +41,7 @@ public class GameManagerScript : MonoBehaviour
     void Awake()
     {
         this.mpSync = new MultiplayerSync(GAME_SERVER_URL);
+        this.mpSync.RegisterSyncFromServerHandler(this.ProcessServerGameState);
         this.gameState = new GameState();
     }
 
@@ -78,6 +79,12 @@ public class GameManagerScript : MonoBehaviour
                 this.gameState.board.boardSquares.Add(boardSquare);
             }
         }
+        this.mpSync.SynchToServer(JsonUtility.ToJson(this.gameState));
+    }
+
+    private void ProcessServerGameState(string gameStateJson)
+    {
+        Debug.Log("processing game state json from game manager: " + gameStateJson);
     }
 
 
