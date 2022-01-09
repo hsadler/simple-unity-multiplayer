@@ -7,19 +7,17 @@ public class GameManagerScript : MonoBehaviour
 
 
     // TODO:
-    //- procedurally build environment
-    //- create serializable game-state object
-    //- create multiplayer-sync class:
-    //      - syncs game state object to server
-    //      - syncs game state object from server
+    //X procedurally build environment
+    //X create serializable game-state object
+    //X create multiplayer-sync class:
+    //      X syncs game state object to server
+    //      X syncs game state object from server
     //- receive player inputs:
     //      - cause scene changes
     //      - mutate game-state
     //- event hooks:
-    //      - received update of game-state from server must update client
+    //      X received update of game-state from server must update client
     //          game-state and scene
-    //      - mutations to game-state from scene must automatically call for a
-    //          sync to server
 
 
     // game object refs
@@ -54,6 +52,11 @@ public class GameManagerScript : MonoBehaviour
 
     void Start()
     {
+        this.mainCamera.transform.position = new Vector3(
+            (BOARD_SIZE / 2) - 0.5f,
+            (BOARD_SIZE / 2) - 0.5f,
+            this.mainCamera.transform.position.z
+        );
     }
 
     void Update()
@@ -110,6 +113,8 @@ public class GameManagerScript : MonoBehaviour
 
     private void SyncGameStateFromServer(string gameStateJson)
     {
+        // create a new game state if there's not currently one being
+        // distributed by the server
         if(gameStateJson == "")
         {
             this.GenerateNewGameState();
