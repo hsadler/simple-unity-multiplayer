@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using WebSocketSharp;
 
 public class MultiplayerSync
@@ -40,13 +39,13 @@ public class MultiplayerSync
 
     private void ProcessServerMessage(object sender, MessageEventArgs e)
     {
-        Debug.Log("Server message received: " + e.Data);
+        //Debug.Log("Server message received: " + e.Data);
         this.gameStateHandlerDelegate(e.Data);
     }
 
     private void SendWebsocketClientMessage(string messageJson)
     {
-        Debug.Log("Client message sent: " + messageJson);
+        //Debug.Log("Client message sent: " + messageJson);
         this.ws.Send(messageJson);
     }
 

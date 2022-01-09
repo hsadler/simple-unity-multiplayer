@@ -6,27 +6,13 @@ public class GameManagerScript : MonoBehaviour
 {
 
 
-    // TODO:
-    //X procedurally build environment
-    //X create serializable game-state object
-    //X create multiplayer-sync class:
-    //      X syncs game state object to server
-    //      X syncs game state object from server
-    //- receive player inputs:
-    //      - cause scene changes
-    //      - mutate game-state
-    //- event hooks:
-    //      X received update of game-state from server must update client
-    //          game-state and scene
-
-
     // game object refs
     public GameObject mainCamera;
 
     // prefab refs
     public GameObject boardSquarePrefab;
 
-    private GameState gameState;
+    public GameState gameState;
     private MultiplayerSync mpSync;
 
     private bool gameObjectsUpdateRequired;
@@ -69,6 +55,12 @@ public class GameManagerScript : MonoBehaviour
 
     // INTERFACE METHODS
 
+    public void SyncGameStateToServer()
+    {
+        string gameStateJson = JsonUtility.ToJson(this.gameState);
+        this.mpSync.SynchToServer(gameStateJson);
+    }
+
     // IMPLEMENTATION METHODS
 
     private void GenerateNewGameState()
@@ -105,6 +97,7 @@ public class GameManagerScript : MonoBehaviour
                 );
                 var bsScript = bsGO.GetComponent<BoardSquareScript>();
                 bsScript.bsModel = bs;
+                bsScript.gms = this;
                 this.idToBoardSquareGO.Add(bs.id, bsGO);
             }
         }
@@ -123,11 +116,6 @@ public class GameManagerScript : MonoBehaviour
             this.gameState = JsonUtility.FromJson<GameState>(gameStateJson);
         }
         this.gameObjectsUpdateRequired = true;
-    }   
-
-    private void SyncGameStateToServer(string gameStateJson)
-    {
-        this.mpSync.SynchToServer(gameStateJson);
     }
 
 
