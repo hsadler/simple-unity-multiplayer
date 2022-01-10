@@ -75,7 +75,6 @@ public class GameManagerScript : MonoBehaviour
                 this.gameState.board.boardSquares.Add(boardSquare);
             }
         }
-        this.mpSync.SynchToServer(JsonUtility.ToJson(this.gameState));
     }
 
     private void SyncGameObjectsFromGameState()
@@ -111,6 +110,7 @@ public class GameManagerScript : MonoBehaviour
         if(gameStateJson == "")
         {
             this.GenerateNewGameState();
+            this.SyncGameStateToServer();
         } else
         {
             this.gameState = JsonUtility.FromJson<GameState>(gameStateJson);
