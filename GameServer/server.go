@@ -84,6 +84,7 @@ func (cl *Client) RecieveMessages() {
 		// log message received
 		fmt.Println("client message received:")
 		// ConsoleLogJsonByteArray(message)
+		cl.Hub.GameState = message
 		cl.Hub.Broadcast <- message
 	}
 }

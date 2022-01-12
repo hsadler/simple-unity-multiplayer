@@ -4,11 +4,13 @@ TODO:
     X add boilerplate files for server
     X get server runnable locally with mock endpoints
     X start Unity client project
-    - do simple server implementation for state synching and broadcast
-    - write unity class for interacting with game server
-    - implement simple game in unity
+    X do simple server implementation for state synching and broadcast
+    X write unity class for interacting with game server
+    X implement simple game in unity
     - test with multiple clients
 
+Look into Go program profiling:
+https://flaviocopes.com/golang-profiling/
 
 Game Idea:
     - players take turns claiming board-squares
