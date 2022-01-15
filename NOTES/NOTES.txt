@@ -7,33 +7,27 @@ TODO:
     X do simple server implementation for state synching and broadcast
     X write unity class for interacting with game server
     X implement simple game in unity
-    - test with multiple clients
-
-Look into Go program profiling:
-https://flaviocopes.com/golang-profiling/
-
-Game Idea:
-    - players take turns claiming board-squares
+    X test with multiple clients
+    X bugfix high cpu game server issue
 
 
-Ideas for Unity Multiplayer Game Server library:
-    - API:
-        - synch data from game-client to game-server
-        - synch data from game-server to game-client
-    - functionality:
-        - game state is a single object
-        - game state updates are entirely client authoritative
-        - all game state client->server synchs result in a broadcast of the 
-            updated game state
-        - all clients have equal authority to update game state (any deviation 
-            from this policy must be implemented on the game-client, such as a 
-            "game owner" client which would have the ability to run environment 
-            entities, for instance)
-    - walk-through:
-        - client connects with server
-        - server synchs inital game state to client
-        - player makes input
-        - input causes game state mutation
-        - game state is synched to server
-        - server broadcasts new game state to all connected clients
+- API:
+    - synch data from game-client to game-server
+    - synch data from game-server to game-client
+- functionality:
+    - game state is a single object
+    - game state updates are entirely client authoritative
+    - all game state client->server synchs result in a broadcast of the 
+        updated game state
+    - all clients have equal authority to update game state (any deviation 
+        from this policy must be implemented on the game-client, such as a 
+        "game owner" client which would have the ability to run environment 
+        entities, for instance)
+- walk-through:
+    - client connects with server
+    - server synchs inital game state to client
+    - player makes input
+    - input causes game state mutation
+    - game state is synched to server
+    - server broadcasts new game state to all connected clients
         
