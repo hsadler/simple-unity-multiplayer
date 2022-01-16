@@ -9,6 +9,9 @@ TODO:
     X implement simple game in unity
     X test with multiple clients
     X bugfix high cpu game server issue
+    - consider how to prepare and create as a Unity package or just leave as a 
+        repo
+    - update README
 
 
 - API:

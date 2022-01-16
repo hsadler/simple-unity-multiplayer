@@ -84,17 +84,16 @@ public class GameManagerScript : MonoBehaviour
         {
             if (this.idToBoardSquareGO.ContainsKey(bs.id))
             {
-                GameObject bsGO = this.idToBoardSquareGO[bs.id];
-                var bsScript = bsGO.GetComponent<BoardSquareScript>();
-                bsScript.bsModel = bs;
+                GameObject boardSquareGO = this.idToBoardSquareGO[bs.id];
+                boardSquareGO.GetComponent<BoardSquareScript>().bsModel = bs;
             } else
             {
-                GameObject bsGO = Instantiate(
+                GameObject boardSquareGO = Instantiate(
                     this.boardSquarePrefab,
                     new Vector3(bs.positionX, bs.positionY, 0),
                     Quaternion.identity
                 );
-                var bsScript = bsGO.GetComponent<BoardSquareScript>();
+                var bsScript = boardSquareGO.GetComponent<BoardSquareScript>();
                 bsScript.bsModel = bs;
                 bsScript.gms = this;
                 this.idToBoardSquareGO.Add(bs.id, bsGO);
