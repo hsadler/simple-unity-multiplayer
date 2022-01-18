@@ -69,7 +69,6 @@ func NewClient(h *Hub, ws *websocket.Conn) *Client {
 func (cl *Client) RecieveMessages() {
 	// do player removal from game state and websocket close on disconnect
 	defer func() {
-		fmt.Println("Client.RecieveMessages() goroutine stopping")
 		cl.Ws.Close()
 	}()
 	for {
@@ -80,7 +79,7 @@ func (cl *Client) RecieveMessages() {
 			break
 		}
 		// log message received
-		fmt.Println("client message received:")
+		// fmt.Println("client message received:")
 		// ConsoleLogJsonByteArray(message)
 		cl.Hub.GameState = message
 		cl.Hub.Broadcast <- message
@@ -88,9 +87,6 @@ func (cl *Client) RecieveMessages() {
 }
 
 func (cl *Client) SendMessages() {
-	defer func() {
-		fmt.Println("Client.SendMessages() goroutine stopping")
-	}()
 	for message := range cl.Send {
 		SendJsonMessage(cl.Ws, message)
 	}
@@ -105,7 +101,7 @@ func (cl *Client) Cleanup() {
 func SendJsonMessage(ws *websocket.Conn, messageJson []byte) {
 	ws.WriteMessage(1, messageJson)
 	// log that message was sent
-	fmt.Println("server message sent:")
+	// fmt.Println("server message sent:")
 	// ConsoleLogJsonByteArray(messageJson)
 }
 
