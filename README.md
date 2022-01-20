@@ -21,7 +21,7 @@ docker build -t simple-unity-multiplayer:dev -f Dockerfile.dev .
 docker-compose -f docker-compose.dev.yaml up
 ```
 
-### Notes
+### Notes about limitations
 This is a purely client authoritative solution, and therefor would only be 
 appropriate for certain game types. 
 
