@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: 'Dockerfile.dev'
-    image: simple-unity-multiplayer:latest
+    image: simple-unity-multiplayer:dev
     container_name: simple-unity-multiplayer
     restart: always
     ports:
